@@ -1,0 +1,1 @@
+Subscription-Aggregator service README
