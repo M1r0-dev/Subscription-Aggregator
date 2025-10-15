@@ -21,6 +21,7 @@ type (
 
 	HTTP struct {
 		Port string `env:"HTTP_PORT,required"`
+		UsePreforkMode bool   `env:"HTTP_USE_PREFORK_MODE" envDefault:"false"`
 	}
 
 	Log struct {
