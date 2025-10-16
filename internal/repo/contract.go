@@ -12,5 +12,5 @@ type SubscriptionRepo interface {
 	Get(cxt context.Context, id int) (*entity.Subscription, error)
 	Update(cxt context.Context, sub *entity.Subscription) error
 	Delete(cxt context.Context, id int) error
-	List(cxt context.Context, opts ...persistence.ListOptions) (*[]entity.Subscription, error)
+	List(cxt context.Context, opts ...persistence.ListOption) (*[]entity.Subscription, error)
 }

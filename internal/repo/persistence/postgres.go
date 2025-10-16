@@ -45,7 +45,7 @@ func (r *SubscriptionRepo) Get(ctx context.Context, id int) (*entity.Subscriptio
 	sql, args, err := r.Builder.
 		Select("id", "service_name", "price", "user_id", "start_date", "end_date").
 		From("subscriptions").
-		Where(squirrel.Eq{"id" : id}).
+		Where(squirrel.Eq{"id": id}).
 		ToSql()
 
 	if err != nil {
@@ -93,7 +93,7 @@ func (r *SubscriptionRepo) Update(ctx context.Context, sub *entity.Subscription)
 
 func (r *SubscriptionRepo) Delete(ctx context.Context, id int) error {
 	const op = "subscriptionRepo.Delete"
-	
+
 	sql, args, err := r.Builder.
 		Delete("subscriptions").
 		Where(squirrel.Eq{"id": id}).
@@ -116,9 +116,8 @@ func (r *SubscriptionRepo) Delete(ctx context.Context, id int) error {
 	return nil
 }
 
-func (r *SubscriptionRepo) List(ctx context.Context, opts ...ListOption) ([]entity.Subscription, error) {
+func (r *SubscriptionRepo) List(ctx context.Context, opts ...ListOption) (*[]entity.Subscription, error) {
 	const op = "subscriptionRepo.List"
-
 	options := &ListOptions{
 		Limit:     50,
 		SortBy:    "start_date",
@@ -190,12 +189,12 @@ func (r *SubscriptionRepo) List(ctx context.Context, opts ...ListOption) ([]enti
 		return nil, fmt.Errorf("%s: rows error: %w", op, err)
 	}
 
-	return subscriptions, nil
+	return &subscriptions, nil
 }
 
 func (r *SubscriptionRepo) Count(ctx context.Context, opts ...ListOption) (int, error) {
 	const op = "subscriptionRepo.Count"
-	
+
 	options := &ListOptions{}
 	for _, opt := range opts {
 		opt(options)
