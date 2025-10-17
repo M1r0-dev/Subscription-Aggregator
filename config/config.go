@@ -12,6 +12,7 @@ type (
 		Log Log
 		PG PG
 		Swagger Swagger
+		Metrics Metrics
 	}
 
 	App struct {
@@ -35,6 +36,10 @@ type (
 
 	Swagger struct {
 		Enabled bool `env:"SWAGGER_ENABLED" envDefault:"false"`
+	}
+
+	Metrics struct {
+		Enabled bool `env:"METRICS_ENABLED" envDefault:"false"`
 	}
 )
 

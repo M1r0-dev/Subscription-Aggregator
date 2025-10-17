@@ -2,13 +2,16 @@
 package main
 
 import (
-	"fmt"
+	"log"
+
+	"github.com/M1r0-dev/Subscription-Aggregator/config"
+	"github.com/M1r0-dev/Subscription-Aggregator/internal/app"
 )
 
 func main() {
-	// there will be some kind of configuration
-	fmt.Println("Success configuration")
-
-	// and starting of service
-	//app.Run() etc
+	cfg, err := config.NewConfig()
+	if err != nil {
+		log.Fatal("Config error %w", err)
+	}
+	app.Run(cfg)
 }

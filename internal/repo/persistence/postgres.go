@@ -32,7 +32,7 @@ func (r *SubscriptionRepo) Store(ctx context.Context, sub *entity.Subscription) 
 		return fmt.Errorf("%s: build query: %w", op, err)
 	}
 
-	err = r.Pool.QueryRow(ctx, sql, args).Scan(&sub.Id)
+	err = r.Pool.QueryRow(ctx, sql, args...).Scan(&sub.Id)
 	if err != nil {
 		return fmt.Errorf("%s: execute query %w", op, err)
 	}
@@ -52,7 +52,7 @@ func (r *SubscriptionRepo) Get(ctx context.Context, id int) (*entity.Subscriptio
 		return nil, fmt.Errorf("%s: build query: %w", op, err)
 	}
 	sub := &entity.Subscription{}
-	err = r.Pool.QueryRow(ctx, sql, args).Scan(&sub.Id, &sub.ServiceName, &sub.Price, &sub.UserID, &sub.StartDate, &sub.EndDate)
+	err = r.Pool.QueryRow(ctx, sql, args...).Scan(&sub.Id, &sub.ServiceName, &sub.Price, &sub.UserID, &sub.StartDate, &sub.EndDate)
 	if err != nil {
 		return nil, fmt.Errorf("%s: execute query %w", op, err)
 	}

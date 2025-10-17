@@ -1,0 +1,67 @@
+x-db-environment: &x-db-environment
+  POSTGRES_SSL_MODE: "disable"
+  POSTGRES_HOST: "db"
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: "db"
+  POSTGRES_PASSWORD: "userpassword"
+  POSTGRES_USER: "user"
+
+x-backend-app-environment: &x-backend-app-environment
+  GOMAXPROCS: "1"
+  # App
+  APP_NAME: "subscribe-aggregator"
+  APP_VERSION: "0.0.1"
+  # HTTP settings
+  HTTP_PORT: "8080"
+  HTTP_USE_PREFORK_MODE: "false"
+  BASE_URL: "http://localhost:8080"
+  # Logger
+  LOG_LEVEL: "debug"
+  # PG
+  PG_POOL_MAX: "2"
+  PG_URL: "postgres://user:userpassword@db:5432/db"
+  # Metrics
+  METRICS_ENABLED: "false"
+  # Swagger
+  SWAGGER_ENABLED: "false"
+
+services:
+  db:
+    container_name: db
+    image: postgres:17-alpine
+    environment:
+      <<: *x-db-environment
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      app_network:
+        aliases:
+          - db.lvh.me
+
+  app:
+    container_name: app
+    platform: linux/amd64
+    pid: "host"
+    build:
+      context: .
+    environment:
+      <<: *x-backend-app-environment
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      - db
+    networks:
+      app_network:
+        aliases:
+          - app.lvh.me
+
+networks:
+  app_network:
+    external: false
+
+
+volumes:
+  db_data:
