@@ -2,7 +2,7 @@ package http
 
 import (
 	"net/http"
-
+	_ "github.com/M1r0-dev/Subscription-Aggregator/docs"
 	"github.com/M1r0-dev/Subscription-Aggregator/config"
 	"github.com/M1r0-dev/Subscription-Aggregator/internal/controller/http/handler"
 	"github.com/M1r0-dev/Subscription-Aggregator/internal/controller/http/mapper"
@@ -53,6 +53,11 @@ func NewRouter(app *fiber.App, cfg *config.Config, u usecase.SubscriptionUsecase
 		subscriptions := api.Group("/subscriptions")
 		{
 			subscriptions.Post("/", subscriptionHandler.Store)
+			subscriptions.Get("/", subscriptionHandler.List)
+			subscriptions.Get("/total-cost", subscriptionHandler.GetTotalCost)
+			subscriptions.Get("/:id", subscriptionHandler.Get)
+			subscriptions.Put("/:id", subscriptionHandler.Update)
+			subscriptions.Delete("/:id", subscriptionHandler.Delete)
 		}
 	}
 }

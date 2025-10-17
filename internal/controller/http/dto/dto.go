@@ -55,11 +55,11 @@ type ListSubscriptionsHandlerRequest struct {
 	PageSize int `query:"page_size" validate:"min=1,max=100"`
 
 	// filters
-	ServiceName *string `query:"service_name"`
+	ServiceName *string    `query:"service_name"`
 	UserID      *string `query:"user_id"`
-	Price       *string `query:"price_min"`
-	StartDate   *string `query:"start_date"` // format: YYYY-MM-DD
-	EndDate     *string `query:"end_date"`   // format: YYYY-MM-DD
+	Price       *string    `query:"price_min"`
+	StartDate   *string    `query:"start_date"` // format: YYYY-MM-DD
+	EndDate     *string    `query:"end_date"`   // format: YYYY-MM-DD
 
 	// sort
 	SortBy    string `query:"sort_by"`    // field name
@@ -89,4 +89,30 @@ type SubscriptionItem struct {
 
 type ErrorResponse struct {
 	Error string `json:"error" example:"message"`
+}
+
+//--------------------------------------------------------------------------
+
+// Total cost
+type TotalCostHandlerRequest struct {
+	UserID      *string `query:"user_id"`
+	ServiceName *string `query:"service_name"`
+	StartDate   *string `query:"start_date" validate:"required"` // format: YYYY-MM-DD
+	EndDate     *string `query:"end_date" validate:"required"`   // format: YYYY-MM-DD
+}
+
+type TotalCostHandlerResponse struct {
+	TotalCost uint64           `json:"total_cost"`
+	Period    Period           `json:"period"`
+	Filters   TotalCostFilters `json:"filters"`
+}
+
+type Period struct {
+	StartDate string `json:"start_date"`
+	EndDate   string `json:"end_date"`
+}
+
+type TotalCostFilters struct {
+	UserID      *string `json:"user_id,omitempty"`
+	ServiceName *string `json:"service_name,omitempty"`
 }

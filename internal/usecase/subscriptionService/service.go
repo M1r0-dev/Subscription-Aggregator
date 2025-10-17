@@ -34,6 +34,10 @@ func (u *SubscriptionUsecase) Delete(ctx context.Context, id int) error {
 	return u.repo.Delete(ctx, id)
 }
 
-func (u *SubscriptionUsecase) List(ctx context.Context, opts ...persistence.ListOption) (*[]entity.Subscription, error) {
+func (u *SubscriptionUsecase) List(ctx context.Context, opts ...persistence.ListOption) ([]*entity.Subscription, error) {
 	return u.repo.List(ctx, opts...)
+}
+
+func (u *SubscriptionUsecase) GetTotalCost(ctx context.Context, userID *string, serviceName *string, startDate, endDate string) (uint64, error) {
+    return u.repo.GetTotalCost(ctx, userID, serviceName, startDate, endDate)
 }

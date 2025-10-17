@@ -21,9 +21,9 @@ x-backend-app-environment: &x-backend-app-environment
   PG_POOL_MAX: "2"
   PG_URL: "postgres://user:userpassword@db:5432/db"
   # Metrics
-  METRICS_ENABLED: "false"
+  METRICS_ENABLED: "true"
   # Swagger
-  SWAGGER_ENABLED: "false"
+  SWAGGER_ENABLED: "true"
 
 services:
   db:

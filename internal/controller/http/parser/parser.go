@@ -147,7 +147,7 @@ func (p *SubscriptionParser) ParseListRequest(ctx *fiber.Ctx) (*dto.ListSubscrip
 		return nil, fiber.NewError(fiber.StatusBadRequest, "Page size must be between 1 and 100")
 	}
 
-	if req.UserID != nil && *req.UserID != "" {
+	if req.UserID != nil {
 		if _, err := uuid.Parse(*req.UserID); err != nil {
 			return nil, fiber.NewError(fiber.StatusBadRequest, "Invalid user ID format in filter, must be UUID")
 		}
@@ -172,4 +172,33 @@ func (p *SubscriptionParser) ParseGetRequest(ctx *fiber.Ctx) (int, error) {
 
 func (p *SubscriptionParser) ParseDeleteRequest(ctx *fiber.Ctx) (int, error) {
 	return p.ParseGetRequest(ctx)
+}
+
+func (p *SubscriptionParser) ParseTotalCostRequest(ctx *fiber.Ctx) (*dto.TotalCostHandlerRequest, error) {
+    var req dto.TotalCostHandlerRequest
+    if err := ctx.QueryParser(&req); err != nil {
+        return nil, fiber.NewError(fiber.StatusBadRequest, "Invalid query parameters")
+    }
+
+    if req.StartDate == nil || *req.StartDate == "" {
+        return nil, fiber.NewError(fiber.StatusBadRequest, "Start date is required")
+    }
+    if req.EndDate == nil || *req.EndDate == "" {
+        return nil, fiber.NewError(fiber.StatusBadRequest, "End date is required")
+    }
+
+    if _, err := time.Parse("2006-01-02", *req.StartDate); err != nil {
+        return nil, fiber.NewError(fiber.StatusBadRequest, "Invalid start date format. Use YYYY-MM-DD")
+    }
+    if _, err := time.Parse("2006-01-02", *req.EndDate); err != nil {
+        return nil, fiber.NewError(fiber.StatusBadRequest, "Invalid end date format. Use YYYY-MM-DD")
+    }
+
+    if req.UserID != nil && *req.UserID != "" {
+        if _, err := uuid.Parse(*req.UserID); err != nil {
+            return nil, fiber.NewError(fiber.StatusBadRequest, "Invalid user ID format in filter, must be UUID")
+        }
+    }
+
+    return &req, nil
 }

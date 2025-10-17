@@ -67,3 +67,23 @@ func (m *SubscriptionMapper) ToListResponse(
 
 	return response
 }
+
+func (m *SubscriptionMapper) ToUpdateResponse(sub *entity.Subscription) dto.GetSubscriptionHandlerResponse {
+    return m.ToGetResponse(sub)
+}
+
+func (m *SubscriptionMapper) ToTotalCostResponse(total uint64, req *dto.TotalCostHandlerRequest) dto.TotalCostHandlerResponse {
+    response := dto.TotalCostHandlerResponse{
+        TotalCost: total,
+        Period: dto.Period{
+            StartDate: *req.StartDate,
+            EndDate:   *req.EndDate,
+        },
+        Filters: dto.TotalCostFilters{
+            UserID:      req.UserID,
+            ServiceName: req.ServiceName,
+        },
+    }
+    
+    return response
+}

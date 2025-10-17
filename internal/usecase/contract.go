@@ -12,5 +12,6 @@ type SubscriptionUsecase interface {
 	Get(ctx context.Context, id int) (*entity.Subscription, error)
 	Update(cxt context.Context, sub *entity.Subscription) error
 	Delete(cxt context.Context, id int) error
-	List(cxt context.Context, opts ...persistence.ListOption) (*[]entity.Subscription, error)
+	List(cxt context.Context, opts ...persistence.ListOption) ([]*entity.Subscription, error)
+	GetTotalCost(ctx context.Context, userID *string, serviceName *string, startDate, endDate string) (uint64, error)
 }
