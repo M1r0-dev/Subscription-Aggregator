@@ -57,18 +57,6 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Start date filter (YYYY-MM-DD)",
-                        "name": "start_date",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "End date filter (YYYY-MM-DD)",
-                        "name": "end_date",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
                         "default": "start_date",
                         "description": "Sort field",
                         "name": "sort_by",

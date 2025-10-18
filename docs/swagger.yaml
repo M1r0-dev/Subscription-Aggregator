@@ -145,14 +145,6 @@ paths:
         in: query
         name: service_name
         type: string
-      - description: Start date filter (YYYY-MM-DD)
-        in: query
-        name: start_date
-        type: string
-      - description: End date filter (YYYY-MM-DD)
-        in: query
-        name: end_date
-        type: string
       - default: start_date
         description: Sort field
         in: query

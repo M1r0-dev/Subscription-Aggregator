@@ -175,8 +175,6 @@ func (h *SubscriptionHandler) Delete(ctx *fiber.Ctx) error {
 // @Param page_size query int false "Page size" default(10) minimum(1) maximum(100)
 // @Param user_id query string false "User ID filter (UUID)"
 // @Param service_name query string false "Service name filter"
-// @Param start_date query string false "Start date filter (YYYY-MM-DD)"
-// @Param end_date query string false "End date filter (YYYY-MM-DD)"
 // @Param sort_by query string false "Sort field" default(start_date)
 // @Param sort_order query string false "Sort order" default(desc) Enums(asc, desc)
 // @Success 200 {object} dto.ListSubscriptionsHandlerResponse
